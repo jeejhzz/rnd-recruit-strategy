@@ -96,7 +96,8 @@
             content: '\f058'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
             color: var(--brand-orange); position: absolute; left: 0;
         }
-        /* Funnel (AIDA) */
+        
+        /* FUNNEL (AIDA) GRAPHICS & FLIP CARDS */
         .funnel-wrapper { display: flex; gap: 40px; align-items: stretch; background: white; padding: 40px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
         .funnel-container { display: flex; flex-direction: column; width: 350px; justify-content: space-between; }
         .funnel-step {
@@ -111,7 +112,51 @@
         .f-r-2 { background-color: #002D57; clip-path: polygon(8% 0%, 92% 0%, 84% 100%, 16% 100%); }
         .f-r-3 { background-color: #004585; clip-path: polygon(16% 0%, 84% 0%, 76% 100%, 24% 100%); }
         .f-r-4 { background-color: var(--brand-orange); clip-path: polygon(24% 0%, 76% 0%, 68% 100%, 32% 100%); }
-        
+
+        /* FLIP CARD ANIMATION FOR FUNNELS */
+        .funnel-flip-container {
+            perspective: 1000px;
+            width: 100%;
+            height: 70px;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+        .funnel-flip-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        .funnel-flip-container.flipped .funnel-flip-inner {
+            transform: rotateY(180deg);
+        }
+        .funnel-front, .funnel-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding: 0 20px;
+        }
+        .funnel-front {
+            font-weight: 800;
+            font-size: 18px;
+            letter-spacing: 1px;
+        }
+        .funnel-back {
+            transform: rotateY(180deg);
+            font-weight: 600;
+            font-size: 14.5px;
+            line-height: 1.4;
+            word-break: keep-all;
+            text-align: center;
+            letter-spacing: -0.5px;
+        }
+
         .funnel-labels { display: flex; flex-direction: column; gap: 10px; flex-grow: 1; }
         .funnel-label-card {
             border: 1px solid var(--slate-200); border-radius: 12px; padding: 0 25px; height: 70px;
@@ -119,17 +164,20 @@
         }
         .funnel-label-card h4 { font-size: 16px; margin-right: 20px; min-width: 90px; color: var(--brand-navy); }
         .funnel-label-card p { font-size: 14px; margin: 0; color: var(--slate-600); }
-        /* Links & Buttons (Interactive & Safe) */
-        .btn-action, .btn-navy {
+
+        /* Links & Buttons */
+        .btn-action, .btn-navy, .btn-flip {
             display: inline-flex; align-items: center; justify-content: center; gap: 10px;
             padding: 12px 20px; border-radius: 8px; font-size: 14px; font-weight: 700;
             text-decoration: none; transition: all 0.3s ease; cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: none;
         }
-        .btn-action { background-color: var(--brand-orange); color: white; border: 1px solid var(--brand-orange); }
+        .btn-action { background-color: var(--brand-orange); color: white; }
         .btn-action:hover { background-color: #E65C00; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(255, 107, 0, 0.2); }
-        .btn-navy { background-color: var(--brand-navy); color: white; border: 1px solid var(--brand-navy); }
+        .btn-navy { background-color: var(--brand-navy); color: white; }
         .btn-navy:hover { background-color: #002D57; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0, 21, 41, 0.2); }
+        .btn-flip { background-color: var(--slate-900); color: white; padding: 10px 20px; border-radius: 50px; font-size: 15px; }
+        .btn-flip:hover { background-color: var(--brand-orange); transform: translateY(-2px); }
         
         .button-group { display: flex; flex-direction: column; gap: 10px; margin-top: auto; padding-top: 15px; }
         /* Tables */
@@ -146,7 +194,7 @@
         .divider-text hr { background-color: var(--brand-orange); border: none; height: 4px; width: 80px; margin: 0 auto 30px auto; }
         .divider-text h2 { font-size: 42px; margin-bottom: 15px; }
 
-        /* 6. BUDGET CALCULATOR MODULE (EXPANDED) */
+        /* 6. BUDGET CALCULATOR MODULE (SUPER EXPANDED) */
         .fab-budget {
             position: fixed; bottom: 40px; right: 40px;
             background-color: var(--brand-orange); color: white;
@@ -174,10 +222,10 @@
         }
         .budget-overlay.open { opacity: 1; pointer-events: auto; }
 
-        /* Expanded Budget Panel */
+        /* Super Expanded Budget Panel (50vw width) */
         .budget-panel {
             position: fixed; top: 0; right: -60vw;
-            width: 50vw; min-width: 650px; max-width: 800px; height: 100vh; background: white;
+            width: 50vw; min-width: 650px; max-width: 850px; height: 100vh; background: white;
             box-shadow: -10px 0 30px rgba(0,0,0,0.2); z-index: 10001;
             transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             display: flex; flex-direction: column;
@@ -201,11 +249,11 @@
         }
         .budget-item:hover { background: white; box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
         .budget-item-info { flex-grow: 1; padding-right: 20px; }
-        .budget-item-title { font-size: 16px; font-weight: 800; color: var(--slate-900); margin-bottom: 4px; }
-        .budget-item-desc { font-size: 14px; color: var(--slate-600); }
-        .budget-item-price { font-size: 15px; font-weight: 800; color: var(--brand-navy); margin-top: 8px; display: inline-block; background: var(--slate-200); padding: 4px 10px; border-radius: 6px; }
+        .budget-item-title { font-size: 16.5px; font-weight: 800; color: var(--slate-900); margin-bottom: 4px; }
+        .budget-item-desc { font-size: 14.5px; color: var(--slate-600); }
+        .budget-item-price { font-size: 15.5px; font-weight: 800; color: var(--brand-navy); margin-top: 8px; display: inline-block; background: var(--slate-200); padding: 4px 10px; border-radius: 6px; }
         
-        .budget-item-input { width: 100px; text-align: right; padding: 12px; border: 1px solid var(--slate-300); border-radius: 8px; font-size: 16px; font-weight: 800; color: var(--brand-orange); outline: none; transition: border-color 0.2s;}
+        .budget-item-input { width: 110px; text-align: right; padding: 12px; border: 1px solid var(--slate-300); border-radius: 8px; font-size: 17px; font-weight: 800; color: var(--brand-orange); outline: none; transition: border-color 0.2s;}
         .budget-item-input:focus { border-color: var(--brand-orange); }
         .budget-item-checkbox { width: 28px; height: 28px; accent-color: var(--brand-orange); cursor: pointer; }
 
@@ -216,28 +264,10 @@
 
         /* Custom Input Styles */
         .custom-cost-input-wrapper { display: flex; width: 100%; gap: 15px; margin-top: 10px; }
-        .custom-cost-input-wrapper input[type="text"] { flex: 1.5; padding: 12px 15px; border: 1px solid var(--slate-300); border-radius: 8px; font-size: 15px; outline: none; }
+        .custom-cost-input-wrapper input[type="text"] { flex: 1.5; padding: 12px 15px; border: 1px solid var(--slate-300); border-radius: 8px; font-size: 15.5px; outline: none; }
         .custom-cost-input-wrapper .number-input { position: relative; flex: 1; }
-        .custom-cost-input-wrapper input[type="number"] { width: 100%; padding: 12px 35px 12px 15px; border: 1px solid var(--slate-300); border-radius: 8px; font-size: 16px; font-weight: 800; color: var(--brand-orange); outline: none; text-align: right; }
-        .custom-cost-input-wrapper .number-input span { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); font-size: 14px; font-weight: 600; color: var(--slate-500); pointer-events: none; }
-        
-        /* Expected Effect Comparison Layout */
-        .effect-row {
-            display: flex; align-items: center; background: white; border-radius: 16px; 
-            border: 1px solid var(--slate-200); padding: 30px 40px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.03); margin-bottom: 20px;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .effect-row:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(0,0,0,0.06); }
-        .effect-asis { flex: 1; text-align: left; padding-right: 30px; border-right: 2px dashed var(--slate-200); }
-        .effect-asis h5 { font-size: 15px; font-weight: 800; color: var(--slate-400); margin-bottom: 10px; letter-spacing: 1px; }
-        .effect-asis p { font-size: 18px; color: var(--slate-500); font-weight: 500; margin: 0; line-height: 1.4; }
-        
-        .effect-arrow { padding: 0 30px; color: var(--slate-300); font-size: 28px; }
-        
-        .effect-tobe { flex: 1.2; text-align: left; padding-left: 30px; }
-        .effect-tobe h5 { font-size: 15px; font-weight: 900; color: var(--brand-navy); margin-bottom: 10px; letter-spacing: 1px; }
-        .effect-tobe p { font-size: 22px; color: var(--brand-orange); font-weight: 800; margin: 0; line-height: 1.4; }
+        .custom-cost-input-wrapper input[type="number"] { width: 100%; padding: 12px 35px 12px 15px; border: 1px solid var(--slate-300); border-radius: 8px; font-size: 17px; font-weight: 800; color: var(--brand-orange); outline: none; text-align: right; }
+        .custom-cost-input-wrapper .number-input span { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); font-size: 14.5px; font-weight: 600; color: var(--slate-500); pointer-events: none; }
 
     </style>
 </head>
@@ -256,6 +286,7 @@
                 <p style="color: #94A3B8; font-size: 20px; max-width: 800px; margin: 30px auto 0;">AIDA 퍼널 기반 현상 진단 및 대응 방안</p>
             </div>
         </section>
+        
         <!-- PART 1 Divider -->
         <section class="section-light" style="padding-top: 100px; padding-bottom: 40px;">
             <div class="container divider-text">
@@ -264,6 +295,7 @@
                 <p style="color: var(--slate-600); font-size: 18px;">AIDA 프레임워크에 기반하여 채용 과정의 병목 현상을 점검합니다.</p>
             </div>
         </section>
+        
         <!-- AIDA Framework Concept -->
         <section class="section-light" style="padding-top: 40px;">
             <div class="container">
@@ -292,6 +324,7 @@
                 </div>
             </div>
         </section>
+        
         <!-- Bottleneck Diagnosis -->
         <section class="section-light" style="padding-top: 40px; padding-bottom: 100px;">
             <div class="container">
@@ -312,6 +345,7 @@
                 </div>
             </div>
         </section>
+        
         <!-- Strategy Roadmap -->
         <section class="section-navy">
             <div class="container">
@@ -324,7 +358,7 @@
                         <div class="funnel-step f-r-4">ACCESS</div>
                     </div>
                     <div class="funnel-labels">
-                        <div class="funnel-label-card" style="background: rgba(255,255,255,0.9); border: none;"><h4>주의</h4><p>R&amp;D 중심의 정체성 수립 및 <strong>4세대 AI 반도체</strong> 포지셔닝 선점</p></div>
+                        <div class="funnel-label-card" style="background: rgba(255,255,255,0.9); border: none;"><h4>홍보</h4><p>R&amp;D 중심의 정체성 수립 및 <strong>4세대 AI 반도체</strong> 포지셔닝 선점</p></div>
                         <div class="funnel-label-card" style="background: rgba(255,255,255,0.9); border: none;"><h4>정보</h4><p>정보 격차 해소를 위한 <strong>C-Level 비전 제시 및 직무 소개</strong> 강화</p></div>
                         <div class="funnel-label-card" style="background: rgba(255,255,255,0.9); border: none;"><h4>정성</h4><p>대학원 <strong>연구실 네트워크 형성</strong> 및 인터뷰 경험(WOW) 극대화</p></div>
                         <div class="funnel-label-card" style="background: rgba(255,255,255,0.9); border: none;"><h4>경로</h4><p>적극적인 <strong>다이렉트 소싱 및 경력사원 집중채용</strong></p></div>
@@ -332,6 +366,7 @@
                 </div>
             </div>
         </section>
+        
         <!-- PART 2 Divider -->
         <section class="section-orange" style="padding-top: 80px; padding-bottom: 40px;">
             <div class="container divider-text">
@@ -340,6 +375,7 @@
                 <p style="color: rgba(255,255,255,0.9); font-size: 18px;">AIDA 프레임워크에 기반하여 채용 전략을 단계별로 구체화합니다.</p>
             </div>
         </section>
+        
         <!-- Phase 1: Attention -->
         <section class="section-light" id="phase1">
             <div class="container">
@@ -370,38 +406,39 @@
                     <div class="tiled-box" style="border-top: 5px solid var(--slate-600);">
                         <h3><i class="fa-solid fa-rectangle-ad" style="color: var(--slate-600);"></i> <a href="https://gemini.google.com/share/398ecef89dd5" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">지하철 및 버스 오프라인 광고</a></h3>
                         
-                        <div style="margin-bottom: 15px;">
-                            <h4 style="color: var(--brand-navy); font-size: 15px; margin-bottom: 8px; border-bottom: 1px solid var(--slate-200); padding-bottom: 5px;"><i class="fa-solid fa-train-subway" style="color: var(--brand-orange); margin-right: 8px;"></i>지하철 광고</h4>
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px; align-items: center;">
+                        <!-- 텍스트 폰트 가독성 증대 -->
+                        <div style="margin-bottom: 20px;">
+                            <h4 style="color: var(--brand-navy); font-size: 16px; margin-bottom: 10px; border-bottom: 1px solid var(--slate-200); padding-bottom: 6px;"><i class="fa-solid fa-train-subway" style="color: var(--brand-orange); margin-right: 8px;"></i>지하철 광고</h4>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 12px; align-items: center;">
                                 <div>
-                                    <div style="font-weight: 700; font-size: 14px;">서울 주요 지하철역 PSP 패키지</div>
-                                    <div style="font-size: 12px; color: var(--slate-600);">강남/여의도/광화문 등 23개 역 50기 노출</div>
+                                    <div style="font-weight: 800; font-size: 15.5px; color: var(--slate-900);">서울 주요 지하철역 PSP 패키지</div>
+                                    <div style="font-size: 13.5px; color: var(--slate-600); margin-top: 3px;">강남/여의도/광화문 등 23개 역 50기 노출</div>
                                 </div>
-                                <div style="font-weight: 800; color: var(--brand-orange); font-size: 14px;">2,500만 원 <span style="font-size: 11px; font-weight:400; color:var(--slate-600);">(20일)</span></div>
+                                <div style="font-weight: 900; color: var(--brand-orange); font-size: 16px;">2,500만 원 <span style="font-size: 12.5px; font-weight:500; color:var(--slate-500);">(20일)</span></div>
                             </div>
                             <div style="display: flex; justify-content: space-between; align-items: center;">
                                 <div>
-                                    <div style="font-weight: 700; font-size: 14px;">강남역 트리플 파노라마</div>
-                                    <div style="font-size: 12px; color: var(--slate-600);">강남역 10번, 11번 출입구 랩핑 노출</div>
+                                    <div style="font-weight: 800; font-size: 15.5px; color: var(--slate-900);">강남역 트리플 파노라마</div>
+                                    <div style="font-size: 13.5px; color: var(--slate-600); margin-top: 3px;">강남역 10번, 11번 출입구 랩핑 노출</div>
                                 </div>
-                                <div style="font-weight: 800; color: var(--brand-orange); font-size: 14px;">1,000만 원 <span style="font-size: 11px; font-weight:400; color:var(--slate-600);">(15일)</span></div>
+                                <div style="font-weight: 900; color: var(--brand-orange); font-size: 16px;">1,000만 원 <span style="font-size: 12.5px; font-weight:500; color:var(--slate-500);">(15일)</span></div>
                             </div>
                         </div>
                         <div>
-                            <h4 style="color: var(--brand-navy); font-size: 15px; margin-bottom: 8px; border-bottom: 1px solid var(--slate-200); padding-bottom: 5px;"><i class="fa-solid fa-bus" style="color: var(--brand-orange); margin-right: 8px;"></i>버스 랩핑 광고</h4>
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px; align-items: center;">
+                            <h4 style="color: var(--brand-navy); font-size: 16px; margin-bottom: 10px; border-bottom: 1px solid var(--slate-200); padding-bottom: 6px;"><i class="fa-solid fa-bus" style="color: var(--brand-orange); margin-right: 8px;"></i>버스 랩핑 광고</h4>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 12px; align-items: center;">
                                 <div>
-                                    <div style="font-weight: 700; font-size: 14px;">강남-판교 노선 버스</div>
-                                    <div style="font-size: 12px; color: var(--slate-600);">1일 8회 왕복 운영 (타깃 권역)</div>
+                                    <div style="font-weight: 800; font-size: 15.5px; color: var(--slate-900);">강남-판교 노선 버스</div>
+                                    <div style="font-size: 13.5px; color: var(--slate-600); margin-top: 3px;">1일 8회 왕복 운영 (타깃 권역)</div>
                                 </div>
-                                <div style="font-weight: 800; color: var(--brand-orange); font-size: 14px;">150만 원 <span style="font-size: 11px; font-weight:400; color:var(--slate-600);">(월/대당)</span></div>
+                                <div style="font-weight: 900; color: var(--brand-orange); font-size: 16px;">150만 원 <span style="font-size: 12.5px; font-weight:500; color:var(--slate-500);">(월/대당)</span></div>
                             </div>
                             <div style="display: flex; justify-content: space-between; align-items: center;">
                                 <div>
-                                    <div style="font-weight: 700; font-size: 14px;">종로-판교 노선 버스</div>
-                                    <div style="font-size: 12px; color: var(--slate-600);">1일 8회 왕복 운영</div>
+                                    <div style="font-weight: 800; font-size: 15.5px; color: var(--slate-900);">종로-판교 노선 버스</div>
+                                    <div style="font-size: 13.5px; color: var(--slate-600); margin-top: 3px;">1일 8회 왕복 운영</div>
                                 </div>
-                                <div style="font-weight: 800; color: var(--brand-orange); font-size: 14px;">120만 원 <span style="font-size: 11px; font-weight:400; color:var(--slate-600);">(월/대당)</span></div>
+                                <div style="font-weight: 900; color: var(--brand-orange); font-size: 16px;">120만 원 <span style="font-size: 12.5px; font-weight:500; color:var(--slate-500);">(월/대당)</span></div>
                             </div>
                         </div>
                         <div class="button-group">
@@ -453,6 +490,7 @@
                         <ul>
                             <li>협력 연구 및 인턴십 기회를 통한 라포(Rapport) 형성</li>
                             <li>교수님 추천을 통해 핵심 석/박사 인재 확보 (전문연구요원 포함)</li>
+                            <li>현업 부서 수요 조사 이후 진행 예정</li>
                         </ul>
                         <div class="button-group">
                             <a href="https://docs.google.com/spreadsheets/d/1nml0TrA7i3fTI2i9AzWiwP7E59UXmmG0dKbXLViLh3U/edit?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn-navy"><i class="fa-solid fa-list"></i> 주요 대학 연구실 리스트</a>
@@ -465,7 +503,7 @@
                         <p style="margin-bottom: 15px; font-weight: 600;">인터뷰 지원자에게 '와우 포인트' 선사</p>
                         <ul>
                             <li><strong>인터뷰 선물:</strong> 면접비 대신 회사 정체성이 담긴 기념품 (ChatGPT 1개월 구독권 등) 증정</li>
-                            <li><strong>사후 서베이:</strong> 인터뷰 피드백 수집 및 지속적 프로세스 개선</li>
+                            <li><strong>사후 서베이:</strong> 인터뷰 피드백 수집 및 지속적 프로세스 개선 및 채용 브랜딩 강화</li>
                             <li><strong>Follow-up:</strong> 인터뷰 직후 회사의 미션&amp;비전이 담긴 따뜻한 메시지 발송</li>
                         </ul>
                         <div class="button-group">
@@ -558,72 +596,81 @@
             </div>
         </section>
         
-        <!-- 패러다임 전환 (기대효과 비교 레이아웃으로 변경됨) -->
+        <!-- 패러다임 전환 (양방향 퍼널 Flip 애니메이션) -->
         <section class="section-light" style="padding-top: 0; padding-bottom: 100px;">
             <div class="container">
-                <h2 class="section-title">채용 패러다임의 혁신적 전환: 기대효과</h2>
-                <div style="display: flex; flex-direction: column; gap: 20px;">
-                    
-                    <!-- Row 1: A -->
-                    <div class="effect-row">
-                        <div class="effect-asis">
-                            <h5>As-is : Awareness</h5>
-                            <p>"저희는 디노티시아라는 회사인데요."</p>
+                <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px;">
+                    <h2 class="section-title" style="margin-bottom: 0;">채용 전략: As-is vs To-be (기대효과)</h2>
+                    <button id="flip-funnel-btn" class="btn-flip"><i class="fa-solid fa-rotate"></i> 멘트 뒤집어보기 (Click!)</button>
+                </div>
+                <div class="two-column">
+                    <!-- As-is Funnel -->
+                    <div class="tiled-box" style="border-top: 5px solid var(--slate-400); background-color: #F8FAFC; align-items: center; text-align: center; padding: 50px 30px;">
+                        <h3 style="color: var(--slate-600); justify-content: center; font-size: 24px; margin-bottom: 30px;"><i class="fa-solid fa-lock" style="color: var(--slate-400);"></i> As-is (기존의 한계)</h3>
+                        <div class="funnel-container" style="width: 100%; max-width: 350px; margin-bottom: 30px; opacity: 0.85;">
+                            
+                            <div class="funnel-flip-container">
+                                <div class="funnel-flip-inner">
+                                    <div class="funnel-front f-q-1">AWARENESS</div>
+                                    <div class="funnel-back f-q-1">"저희는 디노티시아라는 회사인데요."</div>
+                                </div>
+                            </div>
+                            <div class="funnel-flip-container">
+                                <div class="funnel-flip-inner">
+                                    <div class="funnel-front f-q-2">INTEREST</div>
+                                    <div class="funnel-back f-q-2">"디노티시아? 뭐하는 곳이야?"</div>
+                                </div>
+                            </div>
+                            <div class="funnel-flip-container">
+                                <div class="funnel-flip-inner">
+                                    <div class="funnel-front f-q-3">DESIRE</div>
+                                    <div class="funnel-back f-q-3">"디노티시아로 오라고? 글쎄..."</div>
+                                </div>
+                            </div>
+                            <div class="funnel-flip-container">
+                                <div class="funnel-flip-inner">
+                                    <div class="funnel-front f-q-4">ACTION</div>
+                                    <div class="funnel-back f-q-4">"디노티시아 사람은 뽑나?"</div>
+                                </div>
+                            </div>
+
                         </div>
-                        <div class="effect-arrow">
-                            <i class="fa-solid fa-arrow-right-long"></i>
-                        </div>
-                        <div class="effect-tobe">
-                            <h5>To-be : Attention</h5>
-                            <p>"디노티시아에서 연락드렸습니다."</p>
-                        </div>
+                        <p style="font-weight: 800; color: var(--slate-700); font-size: 18px; margin: 0;">"단계마다 존재하는 병목 현상"</p>
                     </div>
 
-                    <!-- Row 2: I -->
-                    <div class="effect-row">
-                        <div class="effect-asis">
-                            <h5>As-is : Interest</h5>
-                            <p>"디노티시아? 뭐하는 회사인데?"</p>
-                        </div>
-                        <div class="effect-arrow">
-                            <i class="fa-solid fa-arrow-right-long"></i>
-                        </div>
-                        <div class="effect-tobe">
-                            <h5>To-be : Information</h5>
-                            <p>"디노티시아는 AI의 인프라를 까는 대표적인 회사지!"</p>
-                        </div>
-                    </div>
+                    <!-- To-be Funnel -->
+                    <div class="tiled-box" style="border-top: 5px solid var(--brand-orange); align-items: center; text-align: center; padding: 50px 30px; box-shadow: 0 20px 40px rgba(255, 107, 0, 0.08);">
+                        <h3 style="color: var(--brand-orange); justify-content: center; font-size: 24px; margin-bottom: 30px;"><i class="fa-solid fa-rocket"></i> To-be (해결 지향점)</h3>
+                        <div class="funnel-container" style="width: 100%; max-width: 350px; margin-bottom: 30px;">
+                            
+                            <div class="funnel-flip-container">
+                                <div class="funnel-flip-inner">
+                                    <div class="funnel-front f-r-1">ATTENTION</div>
+                                    <div class="funnel-back f-r-1">"디노티시아에서 연락드렸습니다."</div>
+                                </div>
+                            </div>
+                            <div class="funnel-flip-container">
+                                <div class="funnel-flip-inner">
+                                    <div class="funnel-front f-r-2">INFORMATION</div>
+                                    <div class="funnel-back f-r-2" style="font-size: 12px;">"디노티시아는 AI 인프라를 까는 대표적인 회사지!"</div>
+                                </div>
+                            </div>
+                            <div class="funnel-flip-container">
+                                <div class="funnel-flip-inner">
+                                    <div class="funnel-front f-r-3">DETAIL</div>
+                                    <div class="funnel-back f-r-3" style="font-size: 12px;">"디노티시아 사람들과 같이 일해보고 싶어!"</div>
+                                </div>
+                            </div>
+                            <div class="funnel-flip-container">
+                                <div class="funnel-flip-inner">
+                                    <div class="funnel-front f-r-4">ACCESS</div>
+                                    <div class="funnel-back f-r-4">"디노티시아 채용 잘하네!"</div>
+                                </div>
+                            </div>
 
-                    <!-- Row 3: D -->
-                    <div class="effect-row">
-                        <div class="effect-asis">
-                            <h5>As-is : Desire</h5>
-                            <p>"디노티시아로 오라고? 글쎄..."</p>
                         </div>
-                        <div class="effect-arrow">
-                            <i class="fa-solid fa-arrow-right-long"></i>
-                        </div>
-                        <div class="effect-tobe">
-                            <h5>To-be : Detail</h5>
-                            <p>"디노티시아 사람들 정말 괜찮아 보이더라. 나도 함께 하고 싶은걸?"</p>
-                        </div>
+                        <p style="font-weight: 800; color: var(--brand-orange); font-size: 18px; margin: 0;">"체계적인 전략과 선제적인 대응"</p>
                     </div>
-
-                    <!-- Row 4: A -->
-                    <div class="effect-row">
-                        <div class="effect-asis">
-                            <h5>As-is : Action</h5>
-                            <p>"디노티시아 사람은 뽑고 있나요?"</p>
-                        </div>
-                        <div class="effect-arrow">
-                            <i class="fa-solid fa-arrow-right-long"></i>
-                        </div>
-                        <div class="effect-tobe">
-                            <h5>To-be : Access</h5>
-                            <p>"디노티시아 채용 정말 열심히 하는구나!"</p>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </section>
@@ -842,9 +889,27 @@
         </div>
     </div>
 
-    <!-- Script for Budget Logic -->
+    <!-- Script for Flip Animation & Budget Logic -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Flip Animation Logic
+            const flipBtn = document.getElementById('flip-funnel-btn');
+            if (flipBtn) {
+                flipBtn.addEventListener('click', () => {
+                    const containers = document.querySelectorAll('.funnel-flip-container');
+                    containers.forEach(c => c.classList.toggle('flipped'));
+                });
+            }
+
+            // You can also flip cards individually by clicking on them
+            const flipContainers = document.querySelectorAll('.funnel-flip-container');
+            flipContainers.forEach(container => {
+                container.addEventListener('click', () => {
+                    container.classList.toggle('flipped');
+                });
+            });
+
+            // Budget Module Logic
             const panel = document.getElementById('budget-panel');
             const overlay = document.getElementById('budget-overlay');
             const fab = document.getElementById('fab-budget');
