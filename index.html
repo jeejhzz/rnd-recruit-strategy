@@ -145,16 +145,85 @@
         .divider-text { text-align: center; }
         .divider-text hr { background-color: var(--brand-orange); border: none; height: 4px; width: 80px; margin: 0 auto 30px auto; }
         .divider-text h2 { font-size: 42px; margin-bottom: 15px; }
+
+        /* 6. BUDGET CALCULATOR MODULE */
+        .fab-budget {
+            position: fixed; bottom: 40px; right: 40px;
+            background-color: var(--brand-orange); color: white;
+            width: 65px; height: 65px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 26px; box-shadow: 0 10px 25px rgba(255, 107, 0, 0.4);
+            cursor: pointer; z-index: 9999;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .fab-budget:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(255, 107, 0, 0.5);
+        }
+        .fab-budget .tooltip {
+            position: absolute; right: 85px; background: var(--brand-navy); color: white;
+            padding: 8px 14px; border-radius: 8px; font-size: 14px; font-weight: 700;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s; white-space: nowrap;
+        }
+        .fab-budget:hover .tooltip { opacity: 1; }
+
+        .budget-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(11, 15, 25, 0.5); backdrop-filter: blur(4px);
+            z-index: 10000; opacity: 0; pointer-events: none; transition: opacity 0.3s;
+        }
+        .budget-overlay.open { opacity: 1; pointer-events: auto; }
+
+        .budget-panel {
+            position: fixed; top: 0; right: -450px;
+            width: 420px; height: 100vh; background: white;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.1); z-index: 10001;
+            transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: flex; flex-direction: column;
+        }
+        .budget-panel.open { right: 0; }
+        
+        .budget-header { padding: 25px; background: var(--brand-navy); color: white; display: flex; justify-content: space-between; align-items: center; }
+        .budget-header h3 { margin: 0; font-size: 18px; display: flex; align-items: center; gap: 10px; color: white; }
+        .budget-close { background: none; border: none; color: white; font-size: 24px; cursor: pointer; transition: 0.2s; }
+        .budget-close:hover { color: var(--brand-orange); }
+
+        .budget-content { flex-grow: 1; overflow-y: auto; padding: 25px; }
+        .budget-category { margin-bottom: 25px; }
+        .budget-category h4 { color: var(--brand-orange); font-size: 15px; border-bottom: 1px solid var(--slate-200); padding-bottom: 8px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        
+        .budget-item {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 12px; padding: 12px; background: var(--slate-50);
+            border-radius: 8px; border: 1px solid var(--slate-200);
+        }
+        .budget-item-info { flex-grow: 1; padding-right: 15px; }
+        .budget-item-title { font-size: 13.5px; font-weight: 700; color: var(--slate-900); }
+        .budget-item-desc { font-size: 11.5px; color: var(--slate-600); margin-top: 3px; }
+        .budget-item-price { font-size: 12px; font-weight: 800; color: var(--brand-navy); margin-top: 3px; display: inline-block; background: var(--slate-200); padding: 2px 6px; border-radius: 4px; }
+        
+        .budget-item-input { width: 70px; text-align: right; padding: 8px; border: 1px solid var(--slate-300); border-radius: 6px; font-size: 14px; font-weight: 700; color: var(--brand-orange); }
+        .budget-item-checkbox { width: 22px; height: 22px; accent-color: var(--brand-orange); cursor: pointer; }
+
+        .budget-footer { padding: 25px; background: var(--slate-100); border-top: 1px solid var(--slate-200); }
+        .budget-total { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 10px; }
+        .budget-total-label { font-size: 16px; font-weight: 700; color: var(--slate-600); }
+        .budget-total-amount { font-size: 28px; font-weight: 900; color: var(--brand-orange); letter-spacing: -1px; }
+
+        /* Custom Input Styles */
+        .custom-cost-input-wrapper { display: flex; width: 100%; gap: 10px; margin-top: 5px; }
+        .custom-cost-input-wrapper input[type="text"] { flex: 1.2; padding: 8px 10px; border: 1px solid var(--slate-300); border-radius: 6px; font-size: 13px; outline: none; }
+        .custom-cost-input-wrapper .number-input { position: relative; flex: 1; }
+        .custom-cost-input-wrapper input[type="number"] { width: 100%; padding: 8px 25px 8px 10px; border: 1px solid var(--slate-300); border-radius: 6px; font-size: 13px; font-weight: 700; color: var(--brand-orange); outline: none; text-align: right; }
+        .custom-cost-input-wrapper .number-input span { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-size: 12px; color: var(--slate-500); pointer-events: none; }
     </style>
 </head>
 <body>
-    <!-- 헤더 내비게이션 -->
     <header>
         <div class="logo">DNOTITIA <span>TALENT</span></div>
         <div style="color: white; font-size: 14px; opacity: 0.8;">R&amp;D 채용 전략 로드맵</div>
     </header>
     <main>
-        <!-- Title Hero Section -->
         <section class="section-dark" style="padding-top: 150px; padding-bottom: 100px; text-align: center; background: radial-gradient(circle at top right, #1E293B, var(--bg-dark));">
             <div class="container">
                 <p style="color: var(--brand-orange); font-weight: 700; letter-spacing: 3px; margin-bottom: 20px; font-size: 16px;">DNOTITIA R&amp;D TALENT ACQUISITION</p>
@@ -162,7 +231,6 @@
                 <p style="color: #94A3B8; font-size: 20px; max-width: 800px; margin: 30px auto 0;">AIDA 퍼널 기반 현상 진단 및 대응 방안</p>
             </div>
         </section>
-        <!-- PART 1 Divider -->
         <section class="section-light" style="padding-top: 100px; padding-bottom: 40px;">
             <div class="container divider-text">
                 <hr>
@@ -170,7 +238,6 @@
                 <p style="color: var(--slate-600); font-size: 18px;">AIDA 프레임워크에 기반하여 채용 과정의 병목 현상을 점검합니다.</p>
             </div>
         </section>
-        <!-- AIDA Framework Concept -->
         <section class="section-light" style="padding-top: 40px;">
             <div class="container">
                 <h2 class="section-title">채용 브랜딩: AIDA 프레임워크 도입 배경</h2>
@@ -198,7 +265,6 @@
                 </div>
             </div>
         </section>
-        <!-- Bottleneck Diagnosis -->
         <section class="section-light" style="padding-top: 40px; padding-bottom: 100px;">
             <div class="container">
                 <h2 class="section-title">현재 채용 과정의 병목 현상</h2>
@@ -218,7 +284,6 @@
                 </div>
             </div>
         </section>
-        <!-- Strategy Roadmap -->
         <section class="section-navy">
             <div class="container">
                 <h2 class="section-title" style="border-color: var(--brand-orange);">단계별 채용 전략 로드맵</h2>
@@ -238,7 +303,6 @@
                 </div>
             </div>
         </section>
-        <!-- PART 2 Divider -->
         <section class="section-orange" style="padding-top: 80px; padding-bottom: 40px;">
             <div class="container divider-text">
                 <hr style="background-color: var(--brand-navy);">
@@ -246,7 +310,6 @@
                 <p style="color: rgba(255,255,255,0.9); font-size: 18px;">AIDA 프레임워크에 기반하여 채용 전략을 단계별로 구체화합니다.</p>
             </div>
         </section>
-        <!-- Phase 1: Attention -->
         <section class="section-light" id="phase1">
             <div class="container">
                 <h2 class="section-title">1단계: Attention — 인지도 개선</h2>
@@ -258,10 +321,18 @@
                             <li><strong>"친구 따라 강남 간다. 연구하러"</strong> 직관적 카피 활용</li>
                         </ul>
                         <h3 style="margin-top: 25px;"><i class="fa-solid fa-microchip"></i> <a href="https://gemini.google.com/share/17c5976a8377" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">4세대 AI 반도체 타이틀 선점</a></h3>
-                        <ul>
+                        <ul style="margin-bottom: 0;">
                             <li>VDPU와 타 반도체(CPU, GPU, NPU)의 차별성 강조</li>
                             <li>데이터 시스템 혁신이라는 새로운 관점의 솔루션 제시</li>
                         </ul>
+                        <h3 style="margin-top: 25px;"><i class="fa-solid fa-handshake"></i> 인플루언서 콜라보레이션 브랜디드 콘텐츠 제작</h3>
+                        <ul style="margin-bottom: 15px;">
+                            <li>미미미누, 김선태 등 유명 인플루언서와 협력해서 홍보 콘텐츠 제작</li>
+                            <li>벡터 DB, AI 반도체 등 어려운 개념을 쉽고 재미있게 대중에게 소개하며 자연스러운 바이럴 효과 유도</li>
+                        </ul>
+                        <div class="button-group" style="padding-top: 0; margin-top: 0;">
+                            <a href="https://www.youtube.com/watch?v=t4XeWVRHAx8" target="_blank" rel="noopener noreferrer" class="btn-action"><i class="fa-brands fa-youtube" style="color: white;"></i> 콜라보 콘텐츠 레퍼런스</a>
+                        </div>
                     </div>
                     
                     <div class="tiled-box" style="border-top: 5px solid var(--slate-600);">
@@ -308,9 +379,6 @@
                 </div>
             </div>
         </section>
-        <!-- (이하 코드는 완전히 동일하게 유지됩니다) -->
-        <!-- Phase 2, Phase 3, Phase 4, As-is vs To-be, Ending Section까지 모두 그대로 유지 -->
-        <!-- Phase 2: Information -->
         <section class="section-light" id="phase2" style="padding-top: 0;">
             <div class="container">
                 <h2 class="section-title">2단계: Information — 콘텐츠 제공</h2>
@@ -339,12 +407,10 @@
                 </div>
             </div>
         </section>
-        <!-- Phase 3: Detail -->
         <section class="section-light" id="phase3" style="padding-top: 0;">
             <div class="container">
                 <h2 class="section-title">3단계: Detail — 세심한 케어</h2>
                 <div class="two-column-alt">
-                    <!-- 대학 연구실 -->
                     <div class="tiled-box" style="border-top: 5px solid var(--brand-navy);">
                         <h3><i class="fa-solid fa-graduation-cap"></i> 주요 대학 연구실 네트워킹</h3>
                         <p style="margin-bottom: 15px; font-weight: 600;">SNU, KAIST, POSTECH 등 유관 Lab 연계망 구축</p>
@@ -357,7 +423,6 @@
                         </div>
                     </div>
                     
-                    <!-- 인터뷰 경험 -->
                     <div class="tiled-box" style="border-top: 5px solid var(--brand-orange);">
                         <h3><i class="fa-solid fa-star"></i> 인터뷰 경험 극대화</h3>
                         <p style="margin-bottom: 15px; font-weight: 600;">인터뷰 지원자에게 '와우 포인트' 선사</p>
@@ -371,7 +436,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- 상시 인재 풀 -->
                 <div style="background: white; border: 1px solid var(--slate-200); border-radius: 16px; padding: 25px 35px; margin-top: 40px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-left: 5px solid #0EA5E9;">
                     <div style="display: flex; align-items: center; gap: 20px;">
                         <div style="width: 55px; height: 55px; background: var(--slate-100); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #0EA5E9; font-size: 24px;">
@@ -388,12 +452,10 @@
                 </div>
             </div>
         </section>
-        <!-- Phase 4: Access -->
         <section class="section-light" id="phase4" style="padding-top: 0;">
             <div class="container">
                 <h2 class="section-title">4단계: Access — 인재풀 확대</h2>
                 <div class="two-column">
-                    <!-- 다이렉트 소싱 -->
                     <div class="tiled-box" style="border-top: 5px solid var(--brand-navy);">
                         <h3><i class="fa-solid fa-crosshairs"></i> 다이렉트 소싱</h3>
                         <div style="margin-bottom: 25px;">
@@ -416,7 +478,6 @@
                         </div>
                     </div>
                     
-                    <!-- 경력 집중채용 -->
                     <div class="tiled-box" style="border-top: 5px solid var(--brand-orange);">
                         <h3><i class="fa-solid fa-user-group"></i> 경력 집중채용 프로모션</h3>
                         <div style="margin-bottom: 15px;">
@@ -441,7 +502,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- 글로벌 영입 -->
                 <div style="background: white; border: 1px solid var(--slate-200); border-radius: 16px; padding: 25px 35px; margin-top: 40px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-left: 5px solid #10B981;">
                     <div style="display: flex; align-items: center; gap: 20px;">
                         <div style="width: 55px; height: 55px; background: var(--slate-100); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #10B981; font-size: 24px;">
@@ -455,12 +515,10 @@
                 </div>
             </div>
         </section>
-        <!-- 패러다임 전환 -->
         <section class="section-light" style="padding-top: 0; padding-bottom: 100px;">
             <div class="container">
                 <h2 class="section-title">채용 전략: As-is vs To-be</h2>
                 <div class="two-column">
-                    <!-- As-is -->
                     <div class="tiled-box" style="border-top: 5px solid var(--slate-400); background-color: #F8FAFC; align-items: center; text-align: center; padding: 50px 30px;">
                         <h3 style="color: var(--slate-600); justify-content: center; font-size: 24px; margin-bottom: 30px;"><i class="fa-solid fa-lock" style="color: var(--slate-400);"></i> As-is</h3>
                         <div class="funnel-container" style="width: 100%; max-width: 350px; margin-bottom: 30px; opacity: 0.8;">
@@ -471,7 +529,6 @@
                         </div>
                         <p style="font-weight: 800; color: var(--slate-700); font-size: 18px; margin: 0;">"단계마다 존재하는 병목 현상"</p>
                     </div>
-                    <!-- To-be -->
                     <div class="tiled-box" style="border-top: 5px solid var(--brand-orange); align-items: center; text-align: center; padding: 50px 30px; box-shadow: 0 20px 40px rgba(255, 107, 0, 0.08);">
                         <h3 style="color: var(--brand-orange); justify-content: center; font-size: 24px; margin-bottom: 30px;"><i class="fa-solid fa-rocket"></i> To-be</h3>
                         <div class="funnel-container" style="width: 100%; max-width: 350px; margin-bottom: 30px;">
@@ -485,7 +542,6 @@
                 </div>
             </div>
         </section>
-        <!-- Ending Section -->
         <section class="section-dark" style="text-align: center; padding: 120px 20px; background: linear-gradient(180deg, var(--slate-900) 0%, var(--bg-dark) 100%);">
             <div class="container">
                 <h2 style="font-size: 56px; font-weight: 900; margin-bottom: 20px;">R&amp;Dnotitia</h2>
@@ -496,5 +552,261 @@
             </div>
         </section>
     </main>
+
+    <div class="fab-budget" id="fab-budget">
+        <i class="fa-solid fa-calculator"></i>
+        <div class="tooltip">예산 자동 편성 시스템</div>
+    </div>
+
+    <div class="budget-overlay" id="budget-overlay"></div>
+
+    <div class="budget-panel" id="budget-panel">
+        <div class="budget-header">
+            <h3><i class="fa-solid fa-coins"></i> 채용 마케팅 예산 시뮬레이터</h3>
+            <button class="budget-close" id="close-budget"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        
+        <div class="budget-content">
+            <div class="budget-category">
+                <h4><i class="fa-solid fa-rectangle-ad"></i> 오프라인 브랜드 광고</h4>
+                <div class="budget-item">
+                    <div class="budget-item-info">
+                        <div class="budget-item-title">지하철역 기둥 광고 (PSP)</div>
+                        <div class="budget-item-desc">1단위: 20일 기준</div>
+                        <div class="budget-item-price">2,500만 원</div>
+                    </div>
+                    <input type="number" class="budget-item-input" min="0" value="0" data-price="25000000">
+                </div>
+                <div class="budget-item">
+                    <div class="budget-item-info">
+                        <div class="budget-item-title">강남역 파노라마 광고</div>
+                        <div class="budget-item-desc">1단위: 15일 기준</div>
+                        <div class="budget-item-price">1,000만 원</div>
+                    </div>
+                    <input type="number" class="budget-item-input" min="0" value="0" data-price="10000000">
+                </div>
+                <div class="budget-item">
+                    <div class="budget-item-info">
+                        <div class="budget-item-title">강남-판교 노선 버스 광고</div>
+                        <div class="budget-item-desc">1단위: 30일 기준</div>
+                        <div class="budget-item-price">150만 원</div>
+                    </div>
+                    <input type="number" class="budget-item-input" min="0" value="0" data-price="1500000">
+                </div>
+                <div class="budget-item">
+                    <div class="budget-item-info">
+                        <div class="budget-item-title">종로-판교 노선 버스 광고</div>
+                        <div class="budget-item-desc">1단위: 30일 기준</div>
+                        <div class="budget-item-price">120만 원</div>
+                    </div>
+                    <input type="number" class="budget-item-input" min="0" value="0" data-price="1200000">
+                </div>
+            </div>
+
+            <div class="budget-category">
+                <h4><i class="fa-solid fa-laptop"></i> 디지털 타겟 채용 광고</h4>
+                <div class="budget-item">
+                    <div class="budget-item-info">
+                        <div class="budget-item-title">리멤버 배너/타겟 광고</div>
+                        <div class="budget-item-desc">1단위: 30일 기준</div>
+                        <div class="budget-item-price">2,000만 원</div>
+                    </div>
+                    <input type="number" class="budget-item-input" min="0" value="0" data-price="20000000">
+                </div>
+                <div class="budget-item">
+                    <div class="budget-item-info">
+                        <div class="budget-item-title">블라인드 광고</div>
+                        <div class="budget-item-desc">1단위: 30일 기준 (예산 소진 시 종료)</div>
+                        <div class="budget-item-price">300만 원</div>
+                    </div>
+                    <input type="number" class="budget-item-input" min="0" value="0" data-price="3000000">
+                </div>
+                <div class="budget-item">
+                    <div class="budget-item-info">
+                        <div class="budget-item-title">링크드인 광고</div>
+                        <div class="budget-item-desc">1단위: 30일 기준 (예산 소진 시 종료)</div>
+                        <div class="budget-item-price">100만 원</div>
+                    </div>
+                    <input type="number" class="budget-item-input" min="0" value="0" data-price="1000000">
+                </div>
+            </div>
+
+            <div class="budget-category">
+                <h4><i class="fa-solid fa-video"></i> 채용/브랜딩 콘텐츠 제작</h4>
+                <div class="budget-item">
+                    <div class="budget-item-info">
+                        <div class="budget-item-title">인플루언서 콜라보 콘텐츠</div>
+                        <div class="budget-item-desc">1단위: 1편 (15분 내외)</div>
+                        <div class="budget-item-price">4,500만 원</div>
+                    </div>
+                    <input type="number" class="budget-item-input" min="0" value="0" data-price="45000000">
+                </div>
+                <div class="budget-item">
+                    <div class="budget-item-info">
+                        <div class="budget-item-title">C-Level 영상 콘텐츠</div>
+                        <div class="budget-item-desc">1단위: 1편</div>
+                        <div class="budget-item-price">1,200만 원</div>
+                    </div>
+                    <input type="number" class="budget-item-input" min="0" value="0" data-price="12000000">
+                </div>
+                <div class="budget-item">
+                    <div class="budget-item-info">
+                        <div class="budget-item-title">현업부서 영상 콘텐츠</div>
+                        <div class="budget-item-desc">1단위: 1편</div>
+                        <div class="budget-item-price">700만 원</div>
+                    </div>
+                    <input type="number" class="budget-item-input" min="0" value="0" data-price="7000000">
+                </div>
+                <div class="budget-item">
+                    <div class="budget-item-info">
+                        <div class="budget-item-title">현업부서 서면 콘텐츠</div>
+                        <div class="budget-item-desc">1단위: 1편</div>
+                        <div class="budget-item-price">50만 원</div>
+                    </div>
+                    <input type="number" class="budget-item-input" min="0" value="0" data-price="500000">
+                </div>
+            </div>
+
+            <div class="budget-category">
+                <h4><i class="fa-solid fa-gift"></i> 후보자 리워드 및 보상금</h4>
+                <div class="budget-item">
+                    <div class="budget-item-info">
+                        <div class="budget-item-title">인터뷰 서베이 선물</div>
+                        <div class="budget-item-desc">1단위: 1명 지급</div>
+                        <div class="budget-item-price">3만 원</div>
+                    </div>
+                    <input type="number" class="budget-item-input" min="0" value="0" data-price="30000">
+                </div>
+                <div class="budget-item">
+                    <div class="budget-item-info">
+                        <div class="budget-item-title">동반입사 축하금</div>
+                        <div class="budget-item-desc">1단위: 입사자 1명당</div>
+                        <div class="budget-item-price">200만 원</div>
+                    </div>
+                    <input type="number" class="budget-item-input" min="0" value="0" data-price="2000000">
+                </div>
+                <div class="budget-item">
+                    <div class="budget-item-info">
+                        <div class="budget-item-title">사내추천 보상금</div>
+                        <div class="budget-item-desc">1단위: 추천 성공 1명당</div>
+                        <div class="budget-item-price">150만 원</div>
+                    </div>
+                    <input type="number" class="budget-item-input" min="0" value="0" data-price="1500000">
+                </div>
+            </div>
+
+            <div class="budget-category">
+                <h4><i class="fa-solid fa-briefcase"></i> 외부 대행 및 제작 비용 (Fixed)</h4>
+                <div class="budget-item">
+                    <div class="budget-item-info">
+                        <div class="budget-item-title">광고 대행사 수수료</div>
+                        <div class="budget-item-desc">선택형 / 기본 요금</div>
+                        <div class="budget-item-price">750만 원</div>
+                    </div>
+                    <input type="checkbox" class="budget-item-checkbox" data-price="7500000">
+                </div>
+                <div class="budget-item">
+                    <div class="budget-item-info">
+                        <div class="budget-item-title">광고 대행사 디자인 비용</div>
+                        <div class="budget-item-desc">선택형 / 기본 요금</div>
+                        <div class="budget-item-price">750만 원</div>
+                    </div>
+                    <input type="checkbox" class="budget-item-checkbox" data-price="7500000">
+                </div>
+                <div class="budget-item">
+                    <div class="budget-item-info">
+                        <div class="budget-item-title">마이크로페이지 제작</div>
+                        <div class="budget-item-desc">선택형 / 기획 및 구축</div>
+                        <div class="budget-item-price">450만 원</div>
+                    </div>
+                    <input type="checkbox" class="budget-item-checkbox" data-price="4500000">
+                </div>
+            </div>
+
+            <div class="budget-category">
+                <h4><i class="fa-solid fa-plus-circle"></i> 기타 예산 직접 입력</h4>
+                <div class="budget-item" style="flex-direction: column; gap: 8px; align-items: stretch; padding: 15px;">
+                    <div style="font-size: 13.5px; font-weight: 700; color: var(--slate-900);">예상치 못한 추가 비용</div>
+                    <div class="custom-cost-input-wrapper">
+                        <input type="text" placeholder="항목명 (예: 추가 대관비)">
+                        <div class="number-input">
+                            <input type="number" id="custom-cost-input" min="0" placeholder="금액 입력" class="custom-val">
+                            <span>원</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="budget-footer">
+            <div class="budget-total">
+                <span class="budget-total-label">예산 총액 추정치</span>
+                <span class="budget-total-amount" id="budget-total-amount">0 원</span>
+            </div>
+            <a href="#" class="btn-action" style="width: 100%; font-size: 15px; padding: 15px;"><i class="fa-solid fa-file-export"></i> 예산안 내역 저장하기</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const panel = document.getElementById('budget-panel');
+            const overlay = document.getElementById('budget-overlay');
+            const fab = document.getElementById('fab-budget');
+            const closeBtn = document.getElementById('close-budget');
+            const totalDisplay = document.getElementById('budget-total-amount');
+
+            // Open & Close Panel
+            const togglePanel = () => {
+                panel.classList.toggle('open');
+                overlay.classList.toggle('open');
+            };
+
+            fab.addEventListener('click', togglePanel);
+            closeBtn.addEventListener('click', togglePanel);
+            overlay.addEventListener('click', togglePanel);
+
+            // Calculate Total Logic
+            const calculateTotal = () => {
+                let total = 0;
+                
+                // Sum up predefined numbers
+                const numberInputs = document.querySelectorAll('.budget-item-input');
+                numberInputs.forEach(input => {
+                    if(input.dataset.price) {
+                        const price = parseInt(input.dataset.price, 10);
+                        const val = parseInt(input.value, 10) || 0;
+                        total += price * val;
+                    }
+                });
+
+                // Sum up checkboxes
+                const checkboxes = document.querySelectorAll('.budget-item-checkbox');
+                checkboxes.forEach(cb => {
+                    if (cb.checked) {
+                        const price = parseInt(cb.dataset.price, 10);
+                        total += price;
+                    }
+                });
+
+                // Sum up Custom Cost
+                const customCostInput = document.getElementById('custom-cost-input');
+                if(customCostInput) {
+                    const customVal = parseInt(customCostInput.value, 10) || 0;
+                    total += customVal;
+                }
+
+                // Render with KRW format
+                totalDisplay.textContent = new Intl.NumberFormat('ko-KR').format(total) + ' 원';
+            };
+
+            // Attach Listeners to all inputs
+            const inputs = document.querySelectorAll('.budget-panel input');
+            inputs.forEach(input => {
+                input.addEventListener('input', calculateTotal);
+                input.addEventListener('change', calculateTotal);
+            });
+        });
+    </script>
 </body>
 </html>
